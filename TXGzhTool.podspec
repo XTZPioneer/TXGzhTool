@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
   s.name         = 'TXGzhTool'         
   s.version      = '0.0.1'             
-  s.summary      = 'Just Testing.'     
+  s.summary      = '微信公众号开发工具。'     
   s.description  = <<-DESC
-                       Testing Private Podspec.
-                       DESC
+                       主要功能：一键发送推文。
+                      DESC
   s.homepage     = 'https://github.com/XTZPioneer/TXGzhTool'                           
   s.license      = 'MIT'                                 
   s.author       = { 'zhangxiong' => 'xtz_pioneer@163.com' }
