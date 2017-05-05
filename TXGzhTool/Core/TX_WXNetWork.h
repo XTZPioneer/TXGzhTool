@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <AFNetworking.h>
 @interface TX_WXNetWork : NSObject
 /*微信POST请求*/
 + (void)POST:(NSString*)url parameters:(id)parameters progressBlock:(void (^)(NSProgress * progress))progressBlock returnValueBlock:(void (^) (id returnValue))returnValueBlock errorBlock:(void (^) (NSError*error))errorBlock;

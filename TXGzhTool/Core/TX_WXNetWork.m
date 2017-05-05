@@ -7,9 +7,12 @@
 //
 
 #import "TX_WXNetWork.h"
+#import <AFNetworking.h>
+
 #define TXFileBoundary @"media"
 #define TXNewLine @"\r\n"
 #define TXEncode(str) [str dataUsingEncoding:NSUTF8StringEncoding]
+
 @implementation TX_WXNetWork
 /*微信POST请求*/
 + (void)POST:(NSString*)url parameters:(id)parameters progressBlock:(void (^)(NSProgress * progress))progressBlock returnValueBlock:(void (^) (id returnValue))returnValueBlock errorBlock:(void (^) (NSError*error))errorBlock{
