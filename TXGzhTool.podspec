@@ -12,5 +12,5 @@ Pod::Spec.new do |s|
   s.source       = { :git => 'https://github.com/XTZPioneer/TXGzhTool.git', :tag => s.version.to_s }
   s.source_files = 'TXGzhTool/**/*.{h,m}'
   s.requires_arc = true  
-  s.dependency 'AFNetworking'
+  s.dependency 'AFNetworking', '~> 3.1.0'
 end
