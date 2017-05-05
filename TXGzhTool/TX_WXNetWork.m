@@ -7,6 +7,7 @@
 //
 
 #import "TX_WXNetWork.h"
+#import "AFNetworking.h"
 #define TXFileBoundary @"media"
 #define TXNewLine @"\r\n"
 #define TXEncode(str) [str dataUsingEncoding:NSUTF8StringEncoding]
