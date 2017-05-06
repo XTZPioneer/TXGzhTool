@@ -37,8 +37,12 @@
         // 2.5 规定请求方式为POST请求
         [mulRequest setHTTPMethod:@"POST"];
         NSData  * jsonData;
-        NSError * error;
-        jsonData= [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:&error];
+        if ([parameters isKindOfClass:[NSString class]]) {
+            jsonData=[parameters dataUsingEncoding:NSUTF8StringEncoding];
+        }else{
+            NSError * error;
+            jsonData= [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:&error];
+        }
         // 设置请求头，01 - 设置请求数据的长度
         [mulRequest setValue:[NSString stringWithFormat:@"%lu",jsonData.length] forHTTPHeaderField:@"Content-Length"];
         /*

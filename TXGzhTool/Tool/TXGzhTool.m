@@ -7,6 +7,7 @@
 //
 
 #import "TXGzhTool.h"
+#import <AFNetworking.h>
 @implementation TXGzhTool
 /*上传素材*/
 + (void)uploadMaterialWithAccessToken:(NSString*)accessToken image:(UIImage*)image article:(TXArticle*)article completionBlock:(CompletionBlock)completionBlock  errorBlock:(ErrorBlock)errorBlock{
@@ -73,16 +74,9 @@
     [TXWXNetWorking POST:[NSString stringWithFormat:@"https://api.weixin.qq.com/cgi-bin/material/add_news?access_token=%@",accessToken] parameters:dict progressBlock:^(NSProgress *progress) {
     } returnValueBlock:^(id returnValue) {
         if (returnValue) {
-            if (completionBlock) {
-                completionBlock(returnValue);
-            }
+            NSLog(@"returnValue:%@",returnValue);
+            [self sendArticleWithAccessToken:accessToken media_id:returnValue[@"media_id"] completionBlock:completionBlock errorBlock:errorBlock];
         }
-        //正式环境下应用下面的代码
-        /*
-         if (returnValue) {
-         [self sendArticleWithAccessToken:accessToken media_id:returnValue[@"media_id"] completionBlock:completionBlock errorBlock:errorBlock];
-         }
-         */
     } errorBlock:^(NSError *error) {
         if (error) {
             if (errorBlock) {
@@ -93,16 +87,8 @@
 }
 /*发送图文*/
 + (void)sendArticleWithAccessToken:(NSString*)accessToken media_id:(NSString *)media_id completionBlock:(CompletionBlock)completionBlock  errorBlock:(ErrorBlock)errorBlock{
-    NSDictionary * dict=@{
-                          @"filter":@{
-                                  @"is_to_all":@"true"
-                                  },
-                          @"mpnews":@{
-                                  @"media_id":media_id
-                                  },
-                          @"msgtype":@"mpnews"
-                          };
-    [TXWXNetWorking POST:[NSString stringWithFormat:@"https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token=%@",accessToken] parameters:dict progressBlock:^(NSProgress *progress) {
+    NSString *str=[NSString stringWithFormat:@"{\"filter\":{\"is_to_all\":true},\"mpnews\":{\"media_id\":\"%@\"},\"msgtype\":\"mpnews\"}",media_id];
+    [TXWXNetWorking POST:[NSString stringWithFormat:@"https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token=%@",accessToken] parameters:str progressBlock:^(NSProgress *progress) {
     } returnValueBlock:^(id returnValue) {
         if (completionBlock) {
             completionBlock(returnValue);
