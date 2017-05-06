@@ -26,7 +26,6 @@
     }else{
         NSData *imageData=UIImagePNGRepresentation(image);
         [self uploadImageWithWithAccessToken:accessToken imageData:imageData article:article completionBlock:completionBlock errorBlock:errorBlock];
-        
     }
 }
 /*上传图片*/
@@ -38,9 +37,14 @@
     NSString * today_time=[formatter stringFromDate:today];
     [TXWXNetWorking uploadWithUrl:[NSString stringWithFormat:@"https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=%@",accessToken] parameters:@{@"type" : @"image"} filename:[NSString stringWithFormat:@"%@.png",today_time] mimeType:@"png" fileData:imageData progressBlock:^(NSProgress *progress) {
     } returnValueBlock:^(id returnValue) {
-        if (returnValue) {
+        if (returnValue[@"media_id"]) {
             [article setThumb_media_id:returnValue[@"media_id"]];
             [self uploadArticleWithAccessToken:accessToken article:article completionBlock:completionBlock errorBlock:errorBlock];
+        }else{
+            if (errorBlock) {
+                NSString * error=[NSString stringWithFormat:@"错误代码:%@",returnValue[@"errcode"]];
+                errorBlock((NSError*)error);
+            }
         }
     } errorBlock:^(NSError *error) {
         if (errorBlock) {
@@ -73,14 +77,24 @@
                           };
     [TXWXNetWorking POST:[NSString stringWithFormat:@"https://api.weixin.qq.com/cgi-bin/material/add_news?access_token=%@",accessToken] parameters:dict progressBlock:^(NSProgress *progress) {
     } returnValueBlock:^(id returnValue) {
-        if (returnValue) {
-            [self sendArticleWithAccessToken:accessToken media_id:returnValue[@"media_id"] completionBlock:completionBlock errorBlock:errorBlock];
+        if (returnValue[@"media_id"]) {
+            /*非正式环境下应用下面的代码*/
+            if (completionBlock) {
+                completionBlock(returnValue);
+            }
+            /*正式环境下应用下面的代码*/
+            /*
+             [self sendArticleWithAccessToken:accessToken media_id:returnValue[@"media_id"] completionBlock:completionBlock errorBlock:errorBlock];
+             */
+        }else{
+            if (errorBlock) {
+                NSString * error=[NSString stringWithFormat:@"错误代码:%@",returnValue[@"errcode"]];
+                errorBlock((NSError*)error);
+            }
         }
     } errorBlock:^(NSError *error) {
-        if (error) {
-            if (errorBlock) {
-                errorBlock(error);
-            }
+        if (errorBlock) {
+            errorBlock(error);
         }
     }];
 }

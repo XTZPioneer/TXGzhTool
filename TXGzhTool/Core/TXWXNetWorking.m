@@ -59,10 +59,15 @@
                       }
                       completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                           if (errorBlock) {
-                              errorBlock(error);
+                              if (error) {
+                                  errorBlock(error);
+                              }
                           }
                           if (returnValueBlock) {
-                              returnValueBlock(responseObject);
+                              if (responseObject) {
+                                  returnValueBlock(responseObject);
+                                  
+                              }
                           }
                       }
                       ];
@@ -153,10 +158,14 @@
                       }
                       completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                           if (errorBlock) {
-                              errorBlock(error);
+                              if (error) {
+                                  errorBlock(error);
+                              }
                           }
                           if (returnValueBlock) {
-                              returnValueBlock(responseObject);
+                              if (responseObject) {
+                                  returnValueBlock(responseObject);
+                              }
                           }
                       }];
         [uploadTask resume];
