@@ -74,7 +74,6 @@
     [TXWXNetWorking POST:[NSString stringWithFormat:@"https://api.weixin.qq.com/cgi-bin/material/add_news?access_token=%@",accessToken] parameters:dict progressBlock:^(NSProgress *progress) {
     } returnValueBlock:^(id returnValue) {
         if (returnValue) {
-            NSLog(@"returnValue:%@",returnValue);
             [self sendArticleWithAccessToken:accessToken media_id:returnValue[@"media_id"] completionBlock:completionBlock errorBlock:errorBlock];
         }
     } errorBlock:^(NSError *error) {
