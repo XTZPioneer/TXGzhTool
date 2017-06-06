@@ -7,7 +7,7 @@
 //
 
 #import "TXArticle.h"
-
+#import <objc/runtime.h>
 @implementation TXArticle
 
 - (NSString*)title{
