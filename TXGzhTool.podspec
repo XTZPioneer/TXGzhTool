@@ -11,6 +11,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.source       = { :git => 'https://github.com/XTZPioneer/TXGzhTool.git', :tag => s.version.to_s }
   s.source_files = 'TXGzhTool/**/*.{h,m}'
-  s.requires_arc = true  
+  s.requires_arc = true
+  s.frameworks   = 'UIKit'
   s.dependency 'AFNetworking', '~> 3.1.0'
 end
